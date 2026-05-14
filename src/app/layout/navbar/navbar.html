@@ -1,1 +1,80 @@
-<p>navbar works!</p>
+<nav
+    class="relative bg-surface after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+
+            <!-- Botón Menú Móvil -->
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <button type="button" (click)="toggleMenu()"
+                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray hover:bg-white/5 hover:text-light focus:outline-none">
+                    <span class="sr-only">Abrir menú</span>
+                    <!-- Icono Hamburguesa (se oculta si está abierto) -->
+                    <svg [class.hidden]="isMobileMenuOpen()" class="size-6" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    <!-- Icono X (se muestra si está abierto) -->
+                    <svg [class.hidden]="!isMobileMenuOpen()" class="size-6" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contenedor Logo + Links -->
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
+                <!-- Logo -->
+                <div class="flex shrink-0 items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center bg-primary">
+                        <svg width="40" height="40" viewBox="0 0 14 14" fill="none">
+                            <path d="M2 11 C2 11 4 7 7 6 C10 5 12 6 12 9" stroke="white" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="7" cy="3.5" r="1.5" fill="white" />
+                        </svg>
+                    </div>
+                    <span class="text-light tracking-tight font-semibold text-[20px]">
+                        Reserva<span class="text-primary">Ya</span>
+                    </span>
+                </div>
+
+                <div class="hidden sm:ml-6 sm:flex items-center ">
+                    <div class="flex space-x-5">
+                        <a routerLink="/home" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:font-semibold hover:text-light transition-all duration-300">
+                            Inicio
+                        </a>
+                        <a routerLink="/busqueda" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:font-semibold hover:text-light transition-all duration-300">Búsqueda</a>
+                        <a routerLink="/detalle" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:font-semibold  hover:text-light transition-all duration-300">Detalle</a>
+                        <a routerLink="/reserva" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:font-semibold hover:text-light transition-all duration-300">Reserva</a>
+                        <a routerLink="/confirmacion" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:font-semibold hover:text-light transition-all duration-300">Confirmación</a>
+                        <a routerLink="/admin" routerLinkActive="bg-primary text-white"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-primary hover:font-semibold hover:text-ligh border border-primary/70 ">Admin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú Móvil Desplegable -->
+    <div [class.hidden]="!isMobileMenuOpen()" class="sm:hidden bg-surface border-t border-white/10">
+        <div class="space-y-1 px-2 pt-2 pb-3">
+            <a href="/home" class="block rounded-md bg-surface px-3 py-2 text-base font-medium text-light">Inicio</a>
+            <a href="/busqueda" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Búsqueda</a>
+            <a href="/detalle" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Detalle</a>
+            <a href="/reserva" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Reserva</a>
+            <a href="/confirmacion" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Confirmación</a>
+            <a href="/admin" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Admin</a>
+        </div>
+    </div>
+</nav>

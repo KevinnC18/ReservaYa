@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+    /* Colores princiaples */
+    --color-primary: #E8602A;
+    --color-secondary: #AD461D;
+
+    /* Backgrounds */
+    --color-background: #F8F7F4;
+    --color-surface: #0E0E0E;
+
+    /* Colores neutros */
+
+    --color-dark: #;
+    --color-light: #FFFFFF;
+    --color-gray: #D9D9D9;
+
+}
+
+/* También es buena idea asegurar que Tailwind escanee tus componentes */
+@source "./app/**/*.{html,ts}";
+
+body {
+    font-family: 'Ranade', sans-serif;
+}
