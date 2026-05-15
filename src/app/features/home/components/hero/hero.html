@@ -1,3 +1,85 @@
-<button class="bg-primary text-dark hover:bg-secondary">
-    Botón
-</button>
+<div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
+    <img src="https://cdn.theatlantic.com/thumbor/KX5lN4RYYtsNyqWnKG7y7kWyOmQ=/0x0:2500x1406/976x549/media/img/mt/2020/11/h_15433931/original.jpg"
+        alt="" class="absolute inset-0 -z-10 size-full object-cover brightness-30 object-right md:object-center" />
+    <div aria-hidden="true"
+        class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl">
+        <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+            class="aspect-1097/845 w-274.25 bg-linear-to-tr from-primary to-secondary opacity-20"></div>
+    </div>
+    <div aria-hidden="true"
+        class="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:-top-112 sm:ml-16 sm:translate-x-0">
+        <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
+            class="aspect-1097/845 w-274.25 bg-linear-to-tr from-primary to-secondary opacity-20"></div>
+    </div>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+            <span class="text-s font-semibold tracking-widest uppercase line-clamp-3 text-primary mb-5">
+                • Reservas instantáneas
+            </span>
+            <h2 class="text-xl font-semibold tracking-tight text-light sm:text-6xl">Reserva tu mesa
+                <span class="text-primary"> en segundos</span>
+            </h2>
+            <p class="mt-8 text-lg font-medium text-pretty text-gray sm:text-xl/8">Encuentra los mejores restaurantes y
+                reserva sin llamadas, sin esperas.
+            </p>
+        </div>
+        <div
+            class="mt-10 grid w-full max-w-3xl grid-cols-1 gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl sm:grid-cols-4">
+            <!-- Ciudad -->
+            <div
+                class="flex h-12 items-center gap-2 rounded-xl bg-white/8 px-4 transition-all focus-within:ring-2 focus-within:ring-primary">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 640 640">
+                    <path fill="#e8602a"
+                        d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z" />
+                </svg>
+                <input type="text" placeholder="Ciudad o zona"
+                    class="w-full bg-transparent text-sm text-light outline-none placeholder:text-gray" />
+            </div>
+            <!-- Fecha -->
+            <div
+                class="flex h-12 items-center gap-2 rounded-xl bg-white/8 px-4 transition-all focus-within:ring-2 focus-within:ring-primary">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 640 640">
+                    <path fill="hsl(17, 81%, 54%)"
+                        d="M224 64C241.7 64 256 78.3 256 96L256 128L384 128L384 96C384 78.3 398.3 64 416 64C433.7 64 448 78.3 448 96L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 96C192 78.3 206.3 64 224 64zM224 320C206.3 320 192 334.3 192 352L192 416C192 433.7 206.3 448 224 448L288 448C305.7 448 320 433.7 320 416L320 352C320 334.3 305.7 320 288 320L224 320z" />
+                </svg>
+
+                <input type="date" class="w-full cursor-pointer bg-transparent text-sm text-light outline-none
+             [&::-webkit-calendar-picker-indicator]:cursor-pointer
+             [&::-webkit-calendar-picker-indicator]:invert" />
+            </div>
+            <!-- Personas -->
+            <div
+                class="flex h-12 items-center gap-2 rounded-xl bg-white/8 px-4 transition-all focus-within:ring-2 focus-within:ring-primary">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 640 640">
+                    <path fill="#e8602a"
+                        d="M320 64C355.3 64 384 92.7 384 128C384 163.3 355.3 192 320 192C284.7 192 256 163.3 256 128C256 92.7 284.7 64 320 64zM416 376C416 401 403.3 423 384 435.9L384 528C384 554.5 362.5 576 336 576L304 576C277.5 576 256 554.5 256 528L256 435.9C236.7 423 224 401 224 376L224 336C224 283 267 240 320 240C373 240 416 283 416 336L416 376zM160 96C190.9 96 216 121.1 216 152C216 182.9 190.9 208 160 208C129.1 208 104 182.9 104 152C104 121.1 129.1 96 160 96zM176 336L176 368C176 400.5 188.1 430.1 208 452.7L208 528C208 529.2 208 530.5 208.1 531.7C199.6 539.3 188.4 544 176 544L144 544C117.5 544 96 522.5 96 496L96 439.4C76.9 428.4 64 407.7 64 384L64 352C64 299 107 256 160 256C172.7 256 184.8 258.5 195.9 262.9C183.3 284.3 176 309.3 176 336zM432 528L432 452.7C451.9 430.2 464 400.5 464 368L464 336C464 309.3 456.7 284.4 444.1 262.9C455.2 258.4 467.3 256 480 256C533 256 576 299 576 352L576 384C576 407.7 563.1 428.4 544 439.4L544 496C544 522.5 522.5 544 496 544L464 544C451.7 544 440.4 539.4 431.9 531.7C431.9 530.5 432 529.2 432 528zM480 96C510.9 96 536 121.1 536 152C536 182.9 510.9 208 480 208C449.1 208 424 182.9 424 152C424 121.1 449.1 96 480 96z" />
+                </svg>
+
+                <select class="w-full appearance-none bg-transparent text-sm text-light outline-none">
+                    <option value="" disabled selected class="text-gray bg-dark">
+                        Personas
+                    </option>
+
+                    @for (person of peopleOptions; track person) {
+                    <option [value]="person" class="bg-dark">
+                        {{ person }} personas
+                    </option>
+                    }
+                </select>
+            </div>
+            <!-- Botón -->
+            <button routerLink="/busqueda"
+                class="flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-semibold text-light transition-all duration-200 hover:scale-[1.02] active:scale-95">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 640 640">
+                    <path fill="#fff"
+                        d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z" />
+                </svg>
+                Buscar mesas
+            </button>
+        </div>
+    </div>
+</div>
