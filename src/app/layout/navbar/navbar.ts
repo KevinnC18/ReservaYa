@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +10,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Navbar {
+  private router = inject(Router);
+
+  goToHome() {
+    this.router.navigate(['/inicio']);
+  }
+
   isMobileMenuOpen = signal(false);
   toggleMenu() {
     this.isMobileMenuOpen.update(open => !open);
