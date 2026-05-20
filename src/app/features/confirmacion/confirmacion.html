@@ -1,1 +1,65 @@
-<p>confirmacion works!</p>
+<div class="min-h-screen bg-[#F8F7F4] flex flex-col items-center justify-center py-12 px-4">
+
+  <!-- Ícono check -->
+  <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
+    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+  </div>
+
+  <!-- Título -->
+  <h1 class="text-2xl font-bold text-[#333333] mb-2">¡Reserva confirmada!</h1>
+  <p class="text-sm text-gray-500 text-center mb-8 max-w-sm leading-relaxed">
+    Hemos enviado la confirmación a tu correo electrónico y por WhatsApp.
+    Te esperamos en {{ restaurante.name }}.
+  </p>
+
+  <!-- Detalles -->
+  <div class="bg-white border border-gray-200 rounded-xl w-full max-w-md p-6 mb-4">
+    <div class="space-y-3 text-sm">
+      <div class="flex justify-between">
+        <span class="text-gray-500">Restaurante</span>
+        <span class="font-semibold text-[#333333]">{{ restaurante.name }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Nombre</span>
+        <span class="font-semibold text-[#333333]">{{ nombre }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Fecha y hora</span>
+        <span class="font-semibold text-[#333333]">{{ fecha }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Personas</span>
+        <span class="font-semibold text-[#333333]">{{ personas }} comensales</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Dirección</span>
+        <span class="font-semibold text-[#333333]">Calle 10 #43-15, El Poblado</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Teléfono</span>
+        <span class="font-semibold text-[#333333]">{{ restaurante.phone }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Código de reserva -->
+  <div class="bg-[#FFF5F0] border border-[#E8602A]/30 rounded-xl w-full max-w-md p-5 mb-6 text-center">
+    <p class="text-xs font-bold text-[#E8602A] tracking-widest mb-2">CÓDIGO DE RESERVA</p>
+    <p class="text-xl font-bold text-[#E8602A]">{{ codigoReserva }}</p>
+  </div>
+
+  <!-- Botones -->
+  <div class="flex gap-3 w-full max-w-md">
+    <button class="flex-1 border border-gray-300 text-gray-600 font-semibold py-2.5 rounded-xl hover:border-[#E8602A] hover:text-[#E8602A] transition-colors duration-200 text-sm">
+      Agregar al calendario
+    </button>
+    <button
+      (click)="volverAlInicio()"
+      class="flex-1 bg-[#E8602A] hover:bg-[#AD461D] text-white font-semibold py-2.5 rounded-xl transition-colors duration-200 text-sm">
+      Volver al inicio
+    </button>
+  </div>
+
+</div>
