@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { Busqueda } from './busqueda';
 
@@ -8,7 +9,8 @@ describe('Busqueda', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Busqueda]
+      imports: [Busqueda],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 
@@ -21,3 +23,4 @@ describe('Busqueda', () => {
     expect(component).toBeTruthy();
   });
 });
+

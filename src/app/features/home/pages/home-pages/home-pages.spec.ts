@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { HomePages } from './home-pages';
 
@@ -8,7 +9,8 @@ describe('HomePages', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomePages]
+      imports: [HomePages],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 
@@ -21,3 +23,4 @@ describe('HomePages', () => {
     expect(component).toBeTruthy();
   });
 });
+

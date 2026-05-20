@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { Detalle } from './detalle';
 
@@ -8,7 +9,8 @@ describe('Detalle', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Detalle]
+      imports: [Detalle],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 
@@ -21,3 +23,4 @@ describe('Detalle', () => {
     expect(component).toBeTruthy();
   });
 });
+

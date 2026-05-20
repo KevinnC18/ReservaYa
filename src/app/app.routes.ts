@@ -8,5 +8,4 @@ export const routes: Routes = [
     { path: 'reserva', loadComponent: () => import('./features/reserva/reserva').then(m => m.Reserva) },
     { path: 'confirmacion', loadComponent: () => import('./features/confirmacion/confirmacion').then(m => m.Confirmacion) },
     { path: 'admin', loadComponent: () => import('./features/admin/admin').then(m => m.Admin) },
-
 ];
