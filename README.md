@@ -2,7 +2,7 @@
 
 Sistema de reservas online para restaurantes. Permite a los usuarios buscar restaurantes, ver detalles, hacer reservas y recibir confirmación. Incluye un panel administrativo para la gestión de reservas.
 
-**Desarrollado por:** KevinnC18 · leonardeco
+**Desarrollado por:** Kevin Correal · Leonardo Guzmán · Saleth Ibarra
 
 ---
 
@@ -10,92 +10,114 @@ Sistema de reservas online para restaurantes. Permite a los usuarios buscar rest
 
 | Tecnología | Versión | Uso |
 |---|---|---|
-| Angular | 21.1.2 | Framework principal |
-| TypeScript | 5.x | Lenguaje |
-| Tailwind CSS | 4.x | Estilos |
+| Angular | 21.x | Framework principal (standalone + lazy loading) |
+| TypeScript | 5.9.x | Lenguaje |
+| Tailwind CSS | 4.x | Estilos (`@import "tailwindcss"` en `styles.css`) |
 | Vitest | 4.x | Tests unitarios |
 | Angular Router | 21.x | Navegación SPA |
+| Angular Signals | — | Estado compartido de reservas (`ReservationService`) |
+| @angular/animations | 21.x | Transiciones de ruta y barra de progreso |
 
 ---
 
 ## Arquitectura del proyecto
 
+La aplicación combina **componentes standalone** (cargados con lazy loading en las rutas) y **módulos NgModule** para agrupar el layout y la página de inicio, importados desde el componente raíz.
+
 ```
 ReservaYa/
+├── public/                                # Assets estáticos (servidos en build)
+│   └── Logo.ico
+│
 ├── src/
 │   ├── app/
 │   │   ├── data/                          # Capa de datos
 │   │   │   ├── restaurantes.interface.ts  # Interface RestaurantesData
-│   │   │   └── restaurantes.data.ts       # Data estática de restaurantes
+│   │   │   └── restaurantes.data.ts       # Catálogo estático de restaurantes
 │   │   │
-│   │   ├── features/                      # Módulos por funcionalidad
-│   │   │   ├── home/                      # Página de inicio
+│   │   ├── services/                      # Servicios globales
+│   │   │   └── reservation.service.ts     # Estado de reserva (signals + computed)
+│   │   │
+│   │   ├── features/                      # Funcionalidades por ruta
+│   │   │   ├── home/
+│   │   │   │   ├── home.module.ts         # Agrupa componentes del inicio
 │   │   │   │   ├── components/
 │   │   │   │   │   ├── hero/              # Banner principal
 │   │   │   │   │   ├── restaurantes/      # Lista de restaurantes
 │   │   │   │   │   ├── info/              # Sección informativa
 │   │   │   │   │   └── footer/            # Pie de página
-│   │   │   │   └── pages/home-pages/      # Página contenedora
+│   │   │   │   └── pages/home-pages/      # Página contenedora (/inicio)
 │   │   │   │
-│   │   │   ├── busqueda/                  # Búsqueda de restaurantes
-│   │   │   │   └── busqueda.ts / .html
-│   │   │   │
-│   │   │   ├── detalle/                   # Detalle del restaurante
-│   │   │   │   └── detalle.ts / .html
-│   │   │   │
-│   │   │   ├── reserva/                   # Formulario de reserva
-│   │   │   │   ├── reserva.ts
-│   │   │   │   ├── reserva.html
-│   │   │   │   └── reserva.spec.ts
-│   │   │   │
-│   │   │   ├── confirmacion/              # Confirmación de reserva
-│   │   │   │   ├── confirmacion.ts
-│   │   │   │   ├── confirmacion.html
-│   │   │   │   └── confirmacion.spec.ts
-│   │   │   │
+│   │   │   ├── busqueda/                  # Búsqueda y filtrado
+│   │   │   ├── detalle/                   # Ficha del restaurante + selector de reserva
+│   │   │   ├── reserva/                   # Formulario de datos del cliente
+│   │   │   ├── confirmacion/              # Resumen y código de reserva
 │   │   │   └── admin/                     # Panel administrativo
-│   │   │       ├── admin.ts
-│   │   │       ├── admin.html
-│   │   │       └── admin.spec.ts
 │   │   │
-│   │   ├── layout/                        # Componentes de layout
-│   │   │   └── navbar/                    # Barra de navegación
+│   │   ├── layout/
+│   │   │   ├── layout.module.ts           # Exporta la barra de navegación
+│   │   │   └── navbar/
 │   │   │
-│   │   ├── app.routes.ts                  # Definición de rutas
-│   │   ├── app.config.ts                  # Configuración global
-│   │   ├── app.ts                         # Componente raíz
-│   │   └── app.html                       # Template raíz
+│   │   ├── app.routes.ts                  # Rutas con loadComponent (lazy)
+│   │   ├── app.config.ts                  # Router, animaciones, scroll restoration
+│   │   ├── app.ts                         # Raíz: navbar, outlet, barra de carga
+│   │   ├── app.html
+│   │   └── app.spec.ts
 │   │
-│   ├── index.html                         # HTML de entrada
-│   ├── main.ts                            # Bootstrap de la app
-│   └── styles.css                         # Estilos globales + variables CSS
+│   ├── index.html
+│   ├── main.ts                            # Bootstrap (`bootstrapApplication`)
+│   └── styles.css                         # Tailwind + variables de tema
 │
 ├── angular.json                           # Configuración Angular CLI
 ├── package.json                           # Dependencias
-└── tsconfig.json                          # Configuración TypeScript
+├── tsconfig.json                          # Configuración TypeScript
+├── tsconfig.app.json
+├── tsconfig.spec.json
+├── .postcssrc.json                        # Plugin PostCSS de Tailwind
+└── .editorconfig
 ```
+
+Cada feature incluye su par `.ts` / `.html` y, en la mayoría de casos, un `.spec.ts` para pruebas unitarias.
+
+---
+
+## Estado compartido
+
+`ReservationService` (`providedIn: 'root'`) centraliza el flujo de reserva con **Angular signals**:
+
+| Signal / computed | Descripción |
+|---|---|
+| `restauranteId`, `fecha`, `hora`, `personas` | Datos elegidos en detalle |
+| `nombre`, `telefono`, `correo`, `notas` | Datos del formulario en `/reserva` |
+| `codigoReserva` | Código generado al confirmar (`RY-YYYYMMDD-XXXX`) |
+| `fechaFormateada`, `fechaCorta` | Fechas legibles en español (locale `es-CO`) |
+
+Los componentes `Detalle`, `Reserva` y `Confirmacion` inyectan este servicio para leer y escribir el estado entre rutas.
 
 ---
 
 ## Flujo de navegación
 
 ```
+/  →  redirige a /inicio
 /inicio
    │
    ▼
-/busqueda  ──────────────────────────────────────────────────────┐
-   │                                                             │
-   ▼                                                             │
-/detalle                                                         │
-   │                                                             │
-   ▼                                                             │
-/reserva  ──── (completar formulario) ────►  /confirmacion       │
-                                                  │              │
-                                                  ▼              │
-                                              /inicio ◄──────────┘
+/busqueda
+   │
+   ▼
+/detalle  o  /detalle/:nombre
+   │
+   ▼
+/reserva  ──── (formulario válido) ────►  /confirmacion
+                                              │
+                                              ▼
+                                          /inicio
 
 /admin  (acceso independiente — panel del restaurante)
 ```
+
+El componente raíz muestra siempre el **navbar** y una **barra de progreso** superior durante las transiciones de ruta.
 
 ---
 
@@ -103,18 +125,22 @@ ReservaYa/
 
 | Ruta | Componente | Descripción |
 |---|---|---|
-| `/inicio` | `HomePages` | Página principal con lista de restaurantes |
+| `/` | — | Redirección a `/inicio` |
+| `/inicio` | `HomePages` | Página principal (hero, restaurantes, info, footer) |
 | `/busqueda` | `Busqueda` | Búsqueda y filtrado de restaurantes |
-| `/detalle` | `Detalle` | Información completa del restaurante |
+| `/detalle` | `Detalle` | Detalle del restaurante (sin parámetro en URL) |
+| `/detalle/:nombre` | `Detalle` | Detalle identificado por nombre del restaurante |
 | `/reserva` | `Reserva` | Formulario para completar la reserva |
 | `/confirmacion` | `Confirmacion` | Pantalla de reserva confirmada |
 | `/admin` | `Admin` | Panel de gestión para el restaurante |
 
-Todas las rutas usan **lazy loading** para optimizar el tiempo de carga inicial.
+Las rutas de features usan **`loadComponent`** (lazy loading) para reducir el bundle inicial.
 
 ---
 
 ## Paleta de colores
+
+Definida en `src/styles.css` con `@theme` de Tailwind v4:
 
 | Variable | Color | Uso |
 |---|---|---|
@@ -123,6 +149,8 @@ Todas las rutas usan **lazy loading** para optimizar el tiempo de carga inicial.
 | `--color-background` | `#F8F7F4` | Fondo crema — páginas |
 | `--color-surface` | `#0E0E0E` | Negro — sidebar admin, navbar |
 | `--color-dark` | `#333333` | Texto principal |
+| `--color-light` | `#FFFFFF` | Texto claro - Superficies claras |
+| `--color-gray` | `#A9A9A9` | Texto secundario |
 | `--color-success` | `#4CAF50` | Verde — estado confirmado |
 | `--color-error` | `#F44336` | Rojo — estado cancelado |
 
@@ -152,15 +180,19 @@ interface RestaurantesData {
 
 ## Vistas principales
 
+### Detalle (`/detalle`, `/detalle/:nombre`)
+- Información del restaurante desde `RESTAURANTES`
+- Selector de fecha, hora y número de personas
+- Persistencia en `ReservationService` al continuar a reserva
+
 ### Reserva (`/reserva`)
 - Resumen de la reserva (restaurante, fecha, hora, personas, dirección)
 - Formulario: nombre, teléfono, correo, notas especiales
 - Checkbox de aceptación de términos
-- Botón "Confirmar reserva" (activo solo si acepta términos)
+- Botón "Confirmar reserva" (activo solo si `formValido`)
 
 ### Confirmación (`/confirmacion`)
-- Ícono de éxito
-- Detalles completos de la reserva
+- Ícono de éxito y detalles desde `ReservationService`
 - Código único de reserva formato `RY-YYYYMMDD-XXXX`
 - Botones: agregar al calendario / volver al inicio
 
@@ -197,25 +229,26 @@ npm run build
 
 ## Tests
 
-El proyecto cuenta con **36 tests unitarios** usando Vitest + Angular Testing Library.
+Pruebas unitarias con **Vitest** y el builder `@angular/build:unit-test`. Hay **12 archivos** `.spec.ts` distribuidos en features, layout y raíz.
 
 ```bash
 npm test
 ```
 
-```
-Test Files  12 passed (12)
-Tests       36 passed (36)
-```
-
-| Componente | Tests | Cobertura |
+| Área | Archivos spec | Enfoque |
 |---|---|---|
-| Reserva | 7 | Formulario, validación de términos, navegación |
-| Confirmacion | 7 | Código de reserva, datos, navegación |
-| Admin | 11 | Secciones, estados, gráfico, estadísticas |
-| Otros | 11 | Home, Busqueda, Detalle, Navbar, App |
+| Home | `hero`, `restaurantes`, `info`, `footer`, `home-pages` | Componentes de inicio |
+| Flujo reserva | `reserva`, `confirmacion`, `detalle` | Formulario, confirmación, detalle |
+| Admin | `admin` | Panel, estados, estadísticas |
+| Layout / app | `navbar`, `app` | Navegación y bootstrap |
+| Búsqueda | `busqueda` | Listado y filtros |
 
 ---
+
+## Licencia
+
+Este proyecto es de carácter académico y pertenece al grupo de:
+Kevin Correal, Leonardo Guzmán y Saleth Ibarra.
 
 ## Repositorios
 
