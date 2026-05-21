@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { Router } from '@angular/router';
-import { RestaurantesData } from '../../data/restaurantes.interface';
 import { RESTAURANTES } from '../../data/restaurantes.data';
+import { ReservationService } from '../../services/reservation.service';
 
 @Component({
   selector: 'app-confirmacion',
@@ -11,15 +11,13 @@ import { RESTAURANTES } from '../../data/restaurantes.data';
 })
 export class Confirmacion {
   private router = inject(Router);
+  readonly svc = inject(ReservationService);
 
-  readonly restaurante: RestaurantesData = RESTAURANTES[0];
+  readonly restaurante = computed(() =>
+    RESTAURANTES.find(r => r.id === this.svc.restauranteId()) ?? RESTAURANTES[0]
+  );
 
-  codigoReserva = 'RY-20250615-4821';
-  nombre = 'Juan García';
-  fecha = 'Lunes 15 jun · 20:00';
-  personas = 2;
-
-  volverAlInicio() {
+  volverAlInicio(): void {
     this.router.navigate(['/inicio']);
   }
 }

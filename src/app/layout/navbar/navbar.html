@@ -62,7 +62,7 @@
                             class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105 hover:text-light transition-all duration-300">Confirmación</a>
                         <a routerLink="/admin" routerLinkActive="bg-primary text-white"
                             [routerLinkActiveOptions]="{exact: true}"
-                            class="rounded-full px-3 py-2 text-sm font-medium text-primary hover:scale-105 hover:text-ligh border border-primary/70 transition-all duration-300">Admin</a>
+                            class="rounded-full px-3 py-2 text-sm font-medium text-primary hover:scale-105 hover:text-light border border-primary/70 transition-all duration-300">Admin</a>
                     </div>
                 </div>
             </div>
@@ -73,12 +73,18 @@
     <div [class.hidden]="!isMobileMenuOpen()"
         class="sm:hidden bg-surface border-t border-white/10 transition-all duration-500 group">
         <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="/inicio" class="block rounded-md bg-surface px-3 py-2 text-base font-medium text-light">Inicio</a>
-            <a href="/busqueda" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Búsqueda</a>
-            <a href="/detalle" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Detalle</a>
-            <a href="/reserva" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Reserva</a>
-            <a href="/confirmacion" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Confirmación</a>
-            <a href="/admin" class="block rounded-md px-3 py-2 text-base font-medium text-gray">Admin</a>
+            <a routerLink="/inicio" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Inicio</a>
+            <a routerLink="/busqueda" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Búsqueda</a>
+            <a routerLink="/detalle" routerLinkActive="bg-primary/20 text-light"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Detalle</a>
+            <a routerLink="/reserva" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Reserva</a>
+            <a routerLink="/confirmacion" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Confirmación</a>
+            <a routerLink="/admin" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeMenu()" class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Admin</a>
         </div>
     </div>
 </nav>

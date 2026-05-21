@@ -1,39 +1,45 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RestaurantesData } from '../../data/restaurantes.interface';
 import { RESTAURANTES } from '../../data/restaurantes.data';
+import { ReservationService } from '../../services/reservation.service';
 
 @Component({
   selector: 'app-reserva',
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './reserva.html',
   styles: ``,
 })
 export class Reserva {
   private router = inject(Router);
+  readonly svc = inject(ReservationService);
 
-  readonly restaurante: RestaurantesData = RESTAURANTES[0];
+  readonly restaurante = computed(() =>
+    RESTAURANTES.find(r => r.id === this.svc.restauranteId()) ?? RESTAURANTES[0]
+  );
 
-  fecha = 'Lunes 15 de junio, 2025';
-  hora = '20:00';
-  personas = 2;
+  nombre = '';
+  telefono = '';
+  correo = '';
+  notas = '';
+  aceptaTerminos = false;
 
-  form = {
-    nombre: '',
-    telefono: '',
-    correo: '',
-    notas: '',
-    aceptaTerminos: false,
-  };
-
-  confirmarReserva() {
-    if (this.form.aceptaTerminos) {
-      this.router.navigate(['/confirmacion']);
-    }
+  get formValido(): boolean {
+    return !!(this.aceptaTerminos && this.nombre.trim() && this.telefono.trim() && this.correo.trim());
   }
 
-  volverAlRestaurante() {
-    this.router.navigate(['/detalle']);
+  confirmarReserva(): void {
+    if (!this.formValido) return;
+    this.svc.nombre.set(this.nombre);
+    this.svc.telefono.set(this.telefono);
+    this.svc.correo.set(this.correo);
+    this.svc.notas.set(this.notas);
+    this.svc.generarCodigo();
+    this.router.navigate(['/confirmacion']);
+  }
+
+  volverAlRestaurante(): void {
+    this.router.navigate(['/detalle'], { queryParams: { id: this.svc.restauranteId() } });
   }
 }
