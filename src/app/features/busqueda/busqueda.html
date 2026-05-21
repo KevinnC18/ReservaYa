@@ -257,7 +257,7 @@
                   {{ statusLabel(restaurante.name) }}
                 </span>
 
-                <button [routerLink]="['/detalle']" [queryParams]="{ id: restaurante.id }"
+                <button [routerLink]="['/detalle', restaurante.name]"
                   class="inline-flex h-11 items-center justify-center rounded-2xl bg-primary px-6 text-sm font-semibold text-light transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer">
 
                   Ver restaurante

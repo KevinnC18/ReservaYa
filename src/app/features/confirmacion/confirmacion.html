@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#F8F7F4] flex flex-col items-center justify-center py-12 px-4">
+<div class="min-h-screen bg-background flex flex-col items-center justify-center py-12 px-4">
 
   <!-- Ícono check -->
   <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
@@ -8,56 +8,58 @@
   </div>
 
   <!-- Título -->
-  <h1 class="text-2xl font-bold text-[#333333] mb-2">¡Reserva confirmada!</h1>
-  <p class="text-sm text-gray-500 text-center mb-8 max-w-sm leading-relaxed">
+  <h1 class="text-2xl font-bold text-dark mb-2">¡Reserva confirmada!</h1>
+  <p class="text-sm text-gray text-center mb-8 max-w-sm leading-relaxed">
     Hemos enviado la confirmación a tu correo electrónico y por WhatsApp.
-    Te esperamos en {{ restaurante.name }}.
+    Te esperamos en {{ restaurante().name }}.
   </p>
 
   <!-- Detalles -->
-  <div class="bg-white border border-gray-200 rounded-xl w-full max-w-md p-6 mb-4">
+  <div class="bg-light border border-gray/20 rounded-3xl w-full max-w-md p-6 mb-4">
     <div class="space-y-3 text-sm">
       <div class="flex justify-between">
-        <span class="text-gray-500">Restaurante</span>
-        <span class="font-semibold text-[#333333]">{{ restaurante.name }}</span>
+        <span class="text-gray">Restaurante</span>
+        <span class="font-semibold text-dark">{{ restaurante().name }}</span>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-500">Nombre</span>
-        <span class="font-semibold text-[#333333]">{{ nombre }}</span>
+        <span class="text-gray">Nombre</span>
+        <span class="font-semibold text-dark">{{ svc.nombre() || 'Sin nombre' }}</span>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-500">Fecha y hora</span>
-        <span class="font-semibold text-[#333333]">{{ fecha }}</span>
+        <span class="text-gray">Fecha y hora</span>
+        <span class="font-semibold text-dark">{{ svc.fechaCorta() || 'Sin fecha' }}</span>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-500">Personas</span>
-        <span class="font-semibold text-[#333333]">{{ personas }} comensales</span>
+        <span class="text-gray">Personas</span>
+        <span class="font-semibold text-dark">
+          {{ svc.personas() }} {{ svc.personas() === 1 ? 'comensal' : 'comensales' }}
+        </span>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-500">Dirección</span>
-        <span class="font-semibold text-[#333333]">Calle 10 #43-15, El Poblado</span>
+        <span class="text-gray">Dirección</span>
+        <span class="font-semibold text-dark">{{ restaurante().location }}</span>
       </div>
       <div class="flex justify-between">
-        <span class="text-gray-500">Teléfono</span>
-        <span class="font-semibold text-[#333333]">{{ restaurante.phone }}</span>
+        <span class="text-gray">Teléfono</span>
+        <span class="font-semibold text-dark">{{ restaurante().phone }}</span>
       </div>
     </div>
   </div>
 
   <!-- Código de reserva -->
-  <div class="bg-[#FFF5F0] border border-[#E8602A]/30 rounded-xl w-full max-w-md p-5 mb-6 text-center">
-    <p class="text-xs font-bold text-[#E8602A] tracking-widest mb-2">CÓDIGO DE RESERVA</p>
-    <p class="text-xl font-bold text-[#E8602A]">{{ codigoReserva }}</p>
+  <div class="bg-primary/5 border border-primary/30 rounded-3xl w-full max-w-md p-5 mb-6 text-center">
+    <p class="text-xs font-bold text-primary tracking-widest mb-2">CÓDIGO DE RESERVA</p>
+    <p class="text-xl font-bold text-primary">{{ svc.codigoReserva() }}</p>
   </div>
 
   <!-- Botones -->
   <div class="flex gap-3 w-full max-w-md">
-    <button class="flex-1 border border-gray-300 text-gray-600 font-semibold py-2.5 rounded-xl hover:border-[#E8602A] hover:text-[#E8602A] transition-colors duration-200 text-sm">
+    <button (click)="volverAlInicio()"
+      class="flex-1 border border-gray/30 text-dark/70 font-semibold py-2.5 rounded-2xl hover:border-primary hover:text-primary transition-colors duration-200 text-sm cursor-pointer">
       Agregar al calendario
     </button>
-    <button
-      (click)="volverAlInicio()"
-      class="flex-1 bg-[#E8602A] hover:bg-[#AD461D] text-white font-semibold py-2.5 rounded-xl transition-colors duration-200 text-sm">
+    <button (click)="volverAlInicio()"
+      class="flex-1 bg-primary hover:bg-secondary text-light font-semibold py-2.5 rounded-2xl transition-colors duration-200 text-sm cursor-pointer">
       Volver al inicio
     </button>
   </div>

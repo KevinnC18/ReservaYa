@@ -17,7 +17,12 @@ export class Navbar {
   }
 
   isMobileMenuOpen = signal(false);
+
   toggleMenu() {
     this.isMobileMenuOpen.update(open => !open);
+  }
+
+  closeMenu() {
+    this.isMobileMenuOpen.set(false);
   }
 }

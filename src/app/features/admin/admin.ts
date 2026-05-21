@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 export interface ReservaItem {
   cliente: string;
@@ -17,7 +18,7 @@ export interface DiaSemana {
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './admin.html',
   styles: ``,
 })
@@ -31,12 +32,12 @@ export class Admin {
   nuevasReservas = 3;
 
   reservas: ReservaItem[] = [
-    { cliente: 'Juan García',   telefono: '+57 300 000 0001', hora: '20:00', personas: 2, mesa: 'Mesa 5',  estado: 'Confirmada' },
-    { cliente: 'María López',   telefono: '+57 310 000 0002', hora: '19:30', personas: 4, mesa: 'Mesa 8',  estado: 'Confirmada' },
-    { cliente: 'Carlos Ruiz',   telefono: '+57 320 000 0003', hora: '21:00', personas: 3, mesa: '—',       estado: 'Pendiente'  },
-    { cliente: 'Ana Martínez',  telefono: '+57 315 000 0004', hora: '20:30', personas: 6, mesa: 'Mesa 12', estado: 'Confirmada' },
-    { cliente: 'Pedro Sosa',    telefono: '+57 311 000 0005', hora: '13:00', personas: 2, mesa: 'Mesa 2',  estado: 'Cancelada'  },
-    { cliente: 'Laura Torres',  telefono: '+57 300 000 0006', hora: '21:30', personas: 5, mesa: 'Mesa 10', estado: 'Pendiente'  },
+    { cliente: 'Juan García', telefono: '+57 300 000 0001', hora: '20:00', personas: 2, mesa: 'Mesa 5', estado: 'Confirmada' },
+    { cliente: 'María López', telefono: '+57 310 000 0002', hora: '19:30', personas: 4, mesa: 'Mesa 8', estado: 'Confirmada' },
+    { cliente: 'Carlos Ruiz', telefono: '+57 320 000 0003', hora: '21:00', personas: 3, mesa: '—', estado: 'Pendiente' },
+    { cliente: 'Ana Martínez', telefono: '+57 315 000 0004', hora: '20:30', personas: 6, mesa: 'Mesa 12', estado: 'Confirmada' },
+    { cliente: 'Pedro Sosa', telefono: '+57 311 000 0005', hora: '13:00', personas: 2, mesa: 'Mesa 2', estado: 'Cancelada' },
+    { cliente: 'Laura Torres', telefono: '+57 300 000 0006', hora: '21:30', personas: 5, mesa: 'Mesa 10', estado: 'Pendiente' },
   ];
 
   ocupacionSemanal: DiaSemana[] = [
@@ -56,9 +57,9 @@ export class Admin {
   getEstadoClass(estado: string): string {
     switch (estado) {
       case 'Confirmada': return 'bg-green-100 text-green-700';
-      case 'Pendiente':  return 'bg-yellow-100 text-yellow-700';
-      case 'Cancelada':  return 'bg-red-100 text-red-700';
-      default:           return '';
+      case 'Pendiente': return 'bg-yellow-100 text-yellow-700';
+      case 'Cancelada': return 'bg-red-100 text-red-700';
+      default: return '';
     }
   }
 

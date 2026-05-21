@@ -1,113 +1,97 @@
-<div class="min-h-screen bg-[#F8F7F4]">
-
-  <!-- Top bar -->
-  <div class="flex justify-end px-8 py-4 border-b border-gray-200 bg-white">
-    <button (click)="volverAlRestaurante()"
-      class="text-sm text-gray-400 hover:text-[#E8602A] transition-colors duration-200">
-      ← Volver al restaurante
-    </button>
-  </div>
+<div class="min-h-screen bg-background">
 
   <!-- Content -->
   <div class="max-w-2xl mx-auto px-4 py-10">
 
+    <!-- Botón volver -->
+    <button (click)="backToDetalle()" class="cursor-pointer inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-primary backdrop-blur-md transition">
+      <span>←</span>
+      Volver al restaurante
+    </button>
+
     <!-- Title -->
     <div class="text-center mb-8">
-      <h1 class="text-2xl font-bold text-[#333333]">Completa tu reserva</h1>
-      <p class="text-sm text-gray-500 mt-1">
-        En {{ restaurante.name }} · {{ fecha }} · {{ hora }} · {{ personas }} personas
+      <h1 class="text-2xl font-bold text-dark">Completa tu reserva</h1>
+      <p class="text-sm text-gray mt-1">
+        En {{ restaurante().name }}
+        @if (svc.fechaFormateada()) { · {{ svc.fechaFormateada() }} }
+        · {{ svc.hora() }}
+        · {{ svc.personas() }} {{ svc.personas() === 1 ? 'persona' : 'personas' }}
       </p>
     </div>
 
-    <!-- Resumen de la reserva -->
-    <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-      <p class="text-xs font-bold text-[#E8602A] tracking-widest mb-4">RESUMEN DE LA RESERVA</p>
+    <!-- Resumen -->
+    <div class="bg-light rounded-3xl border border-gray/20 p-6 mb-6">
+      <p class="text-xs font-bold text-primary tracking-widest mb-4">RESUMEN DE LA RESERVA</p>
       <div class="space-y-2 text-sm">
         <div class="flex justify-between">
-          <span class="text-gray-500">Restaurante</span>
-          <span class="font-semibold text-[#333333]">{{ restaurante.name }}</span>
+          <span class="text-gray">Restaurante</span>
+          <span class="font-semibold text-dark">{{ restaurante().name }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-500">Fecha</span>
-          <span class="font-semibold text-[#333333]">{{ fecha }}</span>
+          <span class="text-gray">Fecha</span>
+          <span class="font-semibold text-dark">
+            {{ svc.fechaFormateada() || 'Sin fecha seleccionada' }}
+          </span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-500">Hora</span>
-          <span class="font-semibold text-[#333333]">{{ hora }}</span>
+          <span class="text-gray">Hora</span>
+          <span class="font-semibold text-dark">{{ svc.hora() }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-500">Personas</span>
-          <span class="font-semibold text-[#333333]">{{ personas }} comensales</span>
+          <span class="text-gray">Personas</span>
+          <span class="font-semibold text-dark">
+            {{ svc.personas() }} {{ svc.personas() === 1 ? 'comensal' : 'comensales' }}
+          </span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-500">Dirección</span>
-          <span class="font-semibold text-[#333333]">Calle 10 #43-15, El Poblado</span>
+          <span class="text-gray">Dirección</span>
+          <span class="font-semibold text-dark">{{ restaurante().location }}</span>
         </div>
       </div>
     </div>
 
     <!-- Formulario -->
-    <div class="grid grid-cols-2 gap-4 mb-4">
+    <div class="grid grid-cols-1 gap-4 mb-4 sm:grid-cols-2">
       <div>
-        <label class="block text-sm text-gray-600 mb-1">Nombre completo</label>
-        <input
-          [(ngModel)]="form.nombre"
-          type="text"
-          placeholder="Juan García"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#E8602A] transition-colors"
-        />
+        <label class="block text-sm text-dark/70 mb-1">Nombre completo*</label>
+        <input [(ngModel)]="nombre" type="text" placeholder="Juan García"
+          class="w-full border border-gray/30 rounded-2xl px-4 py-2.5 text-sm bg-light focus:outline-none focus:border-primary transition-colors" />
       </div>
       <div>
-        <label class="block text-sm text-gray-600 mb-1">Teléfono / WhatsApp</label>
-        <input
-          [(ngModel)]="form.telefono"
-          type="tel"
-          placeholder="+57 300 000 0000"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#E8602A] transition-colors"
-        />
+        <label class="block text-sm text-dark/70 mb-1">Teléfono / WhatsApp*</label>
+        <input [(ngModel)]="telefono" type="tel" placeholder="+57 300 000 0000"
+          class="w-full border border-gray/30 rounded-2xl px-4 py-2.5 text-sm bg-light focus:outline-none focus:border-primary transition-colors" />
       </div>
     </div>
 
     <div class="mb-4">
-      <label class="block text-sm text-gray-600 mb-1">Correo electrónico</label>
-      <input
-        [(ngModel)]="form.correo"
-        type="email"
-        placeholder="juan@correo.com"
-        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#E8602A] transition-colors"
-      />
+      <label class="block text-sm text-dark/70 mb-1">Correo electrónico*</label>
+      <input [(ngModel)]="correo" type="email" placeholder="juan@email.com"
+        class="w-full border border-gray/30 rounded-2xl px-4 py-2.5 text-sm bg-light focus:outline-none focus:border-primary transition-colors" />
     </div>
 
     <div class="mb-6">
-      <label class="block text-sm text-gray-600 mb-1">Notas especiales (opcional)</label>
-      <textarea
-        [(ngModel)]="form.notas"
-        rows="3"
+      <label class="block text-sm text-dark/70 mb-1">Notas especiales (opcional)</label>
+      <textarea [(ngModel)]="notas" rows="3"
         placeholder="Alergias alimentarias, celebración especial, solicitud de mesa específica..."
-        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-[#E8602A] transition-colors resize-none"
-      ></textarea>
+        class="w-full border border-gray/30 rounded-2xl px-4 py-2.5 text-sm bg-light focus:outline-none focus:border-primary transition-colors resize-none">
+      </textarea>
     </div>
 
     <!-- Términos -->
     <div class="flex items-start gap-3 mb-6">
-      <input
-        [(ngModel)]="form.aceptaTerminos"
-        type="checkbox"
-        id="terminos"
-        class="mt-0.5 accent-[#E8602A] cursor-pointer"
-      />
-      <label for="terminos" class="text-xs text-gray-500 leading-relaxed cursor-pointer">
-        Acepto los <a href="#" class="underline hover:text-[#E8602A]">términos y condiciones</a>
-        y la <a href="#" class="underline hover:text-[#E8602A]">política de privacidad</a>
+      <input [(ngModel)]="aceptaTerminos" type="checkbox" id="terminos" class="mt-0.5 accent-primary cursor-pointer" />
+      <label for="terminos" class="text-xs text-gray leading-relaxed cursor-pointer">
+        Acepto los <a class="underline hover:text-primary">términos y condiciones</a>
+        y la <a class="underline hover:text-primary">política de privacidad</a>
         de ReservaYa. Entiendo que puedo cancelar hasta 2 horas antes sin costo.
       </label>
     </div>
 
     <!-- Botón -->
-    <button
-      (click)="confirmarReserva()"
-      [disabled]="!form.aceptaTerminos"
-      class="w-full bg-[#E8602A] hover:bg-[#AD461D] text-white font-semibold py-3 rounded-xl transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed">
+    <button (click)="confirmarReserva()" [disabled]="!formValido"
+      class="w-full bg-primary hover:bg-secondary text-light font-semibold py-3 rounded-2xl transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
       Confirmar reserva
     </button>
 
