@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +13,14 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navbar {
   private router = inject(Router);
+
+  readonly isAdminActive = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects.startsWith('/admin'))
+    ),
+    { initialValue: this.router.url.startsWith('/admin') }
+  );
 
   goToHome() {
     this.router.navigate(['/inicio']);
