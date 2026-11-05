@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from "@angular/router";
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { RESTAURANTES } from '../../../../data/restaurantes.data';
 
 export interface ReservaItem {
   cliente: string;
@@ -11,25 +12,22 @@ export interface ReservaItem {
   estado: 'Confirmada' | 'Pendiente' | 'Cancelada';
 }
 
-export interface DiaSemana {
-  dia: string;
-  porcentaje: number;
-}
-
 @Component({
-  selector: 'app-admin',
-  imports: [CommonModule, RouterLink],
-  templateUrl: './admin.html',
+  selector: 'app-reservas',
+  imports: [FormsModule, RouterLink],
+  templateUrl: './reservas.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Admin {
-  seccionActiva = signal('reservas');
+export class Reservas {
+  readonly restaurante = RESTAURANTES.find((r) => r.id === 1) ?? RESTAURANTES[0];
 
   reservasHoy = 12;
   mesasDisponibles = 4;
   mesasTotales = 14;
   ocupacion = 71;
   nuevasReservas = 3;
+  filtroEstado = signal('Todas');
 
   reservas: ReservaItem[] = [
     { cliente: 'Juan García', telefono: '+57 300 000 0001', hora: '20:00', personas: 2, mesa: 'Mesa 5', estado: 'Confirmada' },
@@ -40,30 +38,26 @@ export class Admin {
     { cliente: 'Laura Torres', telefono: '+57 300 000 0006', hora: '21:30', personas: 5, mesa: 'Mesa 10', estado: 'Pendiente' },
   ];
 
-  ocupacionSemanal: DiaSemana[] = [
-    { dia: 'Lun', porcentaje: 55 },
-    { dia: 'Mar', porcentaje: 76 },
-    { dia: 'Mié', porcentaje: 48 },
-    { dia: 'Jue', porcentaje: 82 },
-    { dia: 'Vie', porcentaje: 95 },
-    { dia: 'Sáb', porcentaje: 98 },
-    { dia: 'Dom', porcentaje: 71 },
-  ];
+  get reservasFiltradas(): ReservaItem[] {
+    const filtro = this.filtroEstado();
+    if (filtro === 'Todas') return this.reservas;
+    return this.reservas.filter((r) => r.estado === filtro);
+  }
 
-  setSeccion(seccion: string) {
-    this.seccionActiva.set(seccion);
+  setFiltro(estado: string) {
+    this.filtroEstado.set(estado);
   }
 
   getEstadoClass(estado: string): string {
     switch (estado) {
-      case 'Confirmada': return 'bg-green-100 text-green-700';
-      case 'Pendiente': return 'bg-yellow-100 text-yellow-700';
-      case 'Cancelada': return 'bg-red-100 text-red-700';
-      default: return '';
+      case 'Confirmada':
+        return 'bg-success/15 text-success';
+      case 'Pendiente':
+        return 'bg-primary/10 text-primary';
+      case 'Cancelada':
+        return 'bg-error/15 text-error';
+      default:
+        return '';
     }
-  }
-
-  getBarHeight(porcentaje: number): string {
-    return (porcentaje * 0.9) + 'px';
   }
 }

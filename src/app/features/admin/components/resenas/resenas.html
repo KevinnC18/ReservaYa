@@ -1,0 +1,92 @@
+<div class="mb-6 flex items-start justify-between">
+  <div>
+    <h1 class="text-xl font-bold text-dark">Reseñas</h1>
+    <p class="mt-0.5 text-sm text-gray">Opiniones verificadas de tus comensales</p>
+  </div>
+  <div class="flex gap-2">
+    <button type="button" (click)="setFiltro(0)"
+      [class]="filtro() === 0
+        ? 'rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-light'
+        : 'rounded-lg border border-gray/20 bg-light px-3 py-1.5 text-xs font-medium text-dark hover:border-primary'">
+      Todas
+    </button>
+    @for (n of [5,4,3,2,1]; track n) {
+    <button type="button" (click)="setFiltro(n)"
+      [class]="filtro() === n
+        ? 'rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-light'
+        : 'rounded-lg border border-gray/20 bg-light px-3 py-1.5 text-xs font-medium text-dark hover:border-primary'">
+      {{ n }} ★
+    </button>
+    }
+  </div>
+</div>
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+  <div class="rounded-xl border border-gray/20 bg-light p-6">
+    <p class="text-xs uppercase tracking-wide text-gray">Promedio</p>
+    <p class="mt-2 text-5xl font-bold text-primary">{{ promedio }}</p>
+    <div class="mt-2 flex text-primary">
+      @for (star of estrellas(5); track star) {
+      <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+        <path
+          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.449a1 1 0 00-1.176 0l-3.37 2.449c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.049 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+      </svg>
+      }
+    </div>
+    <p class="mt-2 text-sm text-gray">{{ total }} reseñas en total</p>
+
+    <div class="mt-6 space-y-2">
+      @for (item of distribucion; track item.estrellas) {
+      <div class="flex items-center gap-2">
+        <span class="w-6 text-xs text-dark">{{ item.estrellas }}★</span>
+        <div class="h-2 flex-1 overflow-hidden rounded-full bg-background">
+          <div class="h-full rounded-full bg-primary" [style.width]="porcentaje(item.cantidad)"></div>
+        </div>
+        <span class="w-8 text-right text-xs text-gray">{{ item.cantidad }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="space-y-4 lg:col-span-2">
+    @for (resena of resenasFiltradas; track resena.nombre) {
+    <article class="rounded-xl border border-gray/20 bg-light p-5">
+      <div class="mb-3 flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-light">
+            {{ resena.nombre[0] }}
+          </div>
+          <div>
+            <p class="font-semibold text-dark">{{ resena.nombre }}</p>
+            <p class="text-xs text-gray">{{ resena.fecha }}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-0.5 text-primary">
+          @for (star of estrellas(resena.rating); track star) {
+          <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.449a1 1 0 00-1.176 0l-3.37 2.449c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.049 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+          </svg>
+          }
+        </div>
+      </div>
+      <p class="text-sm leading-7 text-dark/80">{{ resena.comentario }}</p>
+      @if (resena.respuesta) {
+      <div class="mt-4 rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
+        <p class="text-xs font-semibold uppercase tracking-wide text-primary">Respuesta del restaurante</p>
+        <p class="mt-1 text-sm text-dark/80">{{ resena.respuesta }}</p>
+      </div>
+      } @else {
+      <button type="button"
+        class="mt-4 cursor-pointer text-sm font-medium text-primary hover:underline">
+        Responder
+      </button>
+      }
+    </article>
+    } @empty {
+    <div class="rounded-xl border border-gray/20 bg-light p-8 text-center text-sm text-gray">
+      No hay reseñas con ese filtro.
+    </div>
+    }
+  </div>
+</div>
