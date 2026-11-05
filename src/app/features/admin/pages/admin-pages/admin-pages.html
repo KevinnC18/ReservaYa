@@ -1,6 +1,38 @@
-<div class="flex min-h-screen bg-background">
+<div class="flex flex-col md:flex-row min-h-screen bg-background">
 
-  <aside class="sticky top-0 flex h-screen w-48 shrink-0 flex-col justify-between bg-surface text-light">
+  <!-- Barra Superior y Navegación Móvil (< md) -->
+  <header class="sticky top-0 z-40 flex flex-col bg-surface text-light border-b border-light/10 md:hidden">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-light/10">
+      <div class="flex items-center gap-2">
+        <span class="text-base font-bold text-primary">ReservaYa</span>
+        <span class="rounded bg-light/10 px-2 py-0.5 text-xs text-white/80">{{ restaurante.name }}</span>
+      </div>
+      <a routerLink="/admin/login"
+        class="flex items-center gap-1.5 text-xs text-gray transition-colors hover:text-light">
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+        </svg>
+        <span>Salir</span>
+      </a>
+    </div>
+
+    <!-- Pestañas horizontales táctiles -->
+    <nav class="flex items-center gap-1 overflow-x-auto px-3 py-2 text-xs font-medium">
+      @for (item of menu; track item.id) {
+      <button type="button" (click)="setSeccion(item.id)"
+        [class]="seccionActiva() === item.id
+            ? 'flex items-center gap-1.5 shrink-0 rounded-lg bg-primary px-3 py-1.5 text-light font-semibold'
+            : 'flex items-center gap-1.5 shrink-0 rounded-lg px-3 py-1.5 text-gray hover:bg-light/5 hover:text-light transition-colors'">
+        <span>{{ item.label }}</span>
+      </button>
+      }
+    </nav>
+  </header>
+
+  <!-- Aside Lateral Escritorio (>= md) -->
+  <aside
+    class="hidden md:flex sticky top-0 h-screen w-48 lg:w-56 shrink-0 flex-col justify-between bg-surface text-light">
     <div class="border-b border-light/10 p-5">
       <p class="text-lg font-bold leading-tight text-primary">ReservaYa</p>
       <p class="mt-0.5 text-xs text-white/75">{{ restaurante.name }} · Panel</p>
@@ -49,7 +81,8 @@
     </div>
   </aside>
 
-  <main class="flex-1 overflow-auto p-8">
+  <!-- Contenido Principal -->
+  <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
     @switch (seccionActiva()) {
     @case ('reservas') {
     <app-reservas />

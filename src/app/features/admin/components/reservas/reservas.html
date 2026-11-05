@@ -1,92 +1,101 @@
-<div class="flex items-start justify-between mb-6">
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
   <div>
-    <h1 class="text-xl font-bold text-dark">Reservas del día</h1>
-    <p class="mt-0.5 text-sm text-gray">{{ restaurante.name }} · Lunes 15 de junio, 2025</p>
+    <h1 class="text-xl sm:text-2xl font-bold text-dark">Reservas del día</h1>
+    <p class="mt-0.5 text-xs sm:text-sm text-gray">{{ restaurante.name }} · Lunes 15 de junio, 2025</p>
   </div>
-  <div class="flex items-center gap-3">
+  <div class="flex flex-wrap items-center gap-2 sm:gap-3">
     <span
-      class="flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-3 py-1.5 text-sm text-primary">
+      class="flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-primary">
       {{ nuevasReservas }} nuevas reservas
     </span>
     <button routerLink="/busqueda"
-      class="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-light transition-colors duration-200 hover:bg-secondary">
+      class="cursor-pointer rounded-lg bg-primary px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-light transition-colors duration-200 hover:bg-secondary">
       + Nueva reserva manual
     </button>
   </div>
 </div>
 
-<div class="mb-6 grid grid-cols-3 gap-4">
-  <div class="rounded-xl border border-gray/20 bg-light p-5">
-    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Reservas Hoy</p>
-    <p class="text-3xl font-bold text-primary">{{ reservasHoy }}</p>
+<div class="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
+    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Reservas Hoy</p>
+    <p class="text-2xl sm:text-3xl font-bold text-primary">{{ reservasHoy }}</p>
     <p class="mt-1 text-xs text-gray">+2 vs. ayer</p>
   </div>
-  <div class="rounded-xl border border-gray/20 bg-light p-5">
-    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Mesas Disponibles</p>
-    <p class="text-3xl font-bold text-dark">{{ mesasDisponibles }} / {{ mesasTotales }}</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
+    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Mesas Disponibles</p>
+    <p class="text-2xl sm:text-3xl font-bold text-dark">{{ mesasDisponibles }} / {{ mesasTotales }}</p>
     <p class="mt-1 text-xs text-gray">10 ocupadas ahora</p>
   </div>
-  <div class="rounded-xl border border-gray/20 bg-light p-5">
-    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Ocupación</p>
-    <p class="text-3xl font-bold text-dark">{{ ocupacion }}%</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
+    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Ocupación</p>
+    <p class="text-2xl sm:text-3xl font-bold text-dark">{{ ocupacion }}%</p>
     <p class="mt-1 text-xs text-gray">Pico: 20:00–21:30</p>
   </div>
 </div>
 
-<div class="overflow-hidden rounded-xl border border-gray/20 bg-light">
-  <div class="flex items-center justify-between border-b border-gray/15 px-6 py-4">
-    <h2 class="font-semibold text-dark">Lista de reservas</h2>
-    <select [ngModel]="filtroEstado()" (ngModelChange)="setFiltro($event)" name="filtroEstado"
-      class="rounded-lg border border-gray/20 px-3 py-1.5 text-sm text-dark outline-none focus:border-primary">
-      <option>Todas</option>
-      <option>Confirmada</option>
-      <option>Pendiente</option>
-      <option>Cancelada</option>
-    </select>
+<div class="overflow-hidden rounded-xl border border-gray/20 bg-light shadow-sm">
+  <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-gray/15 px-4 sm:px-6 py-3.5 sm:py-4">
+    <div>
+      <h2 class="font-semibold text-dark text-sm sm:text-base">Lista de reservas</h2>
+      <p class="text-[11px] text-gray sm:hidden">Desliza horizontalmente para ver detalles</p>
+    </div>
+    <div class="flex items-center gap-2 self-start sm:self-auto">
+      <label class="text-xs text-gray hidden sm:inline">Filtrar por estado:</label>
+      <select [ngModel]="filtroEstado()" (ngModelChange)="setFiltro($event)" name="filtroEstado"
+        class="rounded-lg border border-gray/20 bg-background px-3 py-1.5 text-xs sm:text-sm text-dark outline-none focus:border-primary">
+        <option>Todas</option>
+        <option>Confirmada</option>
+        <option>Pendiente</option>
+        <option>Cancelada</option>
+      </select>
+    </div>
   </div>
-  <table class="w-full">
-    <thead>
-      <tr class="bg-background text-xs uppercase text-gray">
-        <th class="px-6 py-3 text-left font-medium">Cliente</th>
-        <th class="px-6 py-3 text-left font-medium">Hora</th>
-        <th class="px-6 py-3 text-left font-medium">Personas</th>
-        <th class="px-6 py-3 text-left font-medium">Mesa</th>
-        <th class="px-6 py-3 text-left font-medium">Estado</th>
-        <th class="px-6 py-3 text-left font-medium">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (r of reservasFiltradas; track r.cliente) {
-      <tr class="border-t border-gray/15 transition-colors hover:bg-background">
-        <td class="px-6 py-3">
-          <p class="text-sm font-medium text-dark">{{ r.cliente }}</p>
-          <p class="text-xs text-gray">{{ r.telefono }}</p>
-        </td>
-        <td class="px-6 py-3 text-sm text-dark/70">{{ r.hora }}</td>
-        <td class="px-6 py-3 text-sm text-dark/70">{{ r.personas }}</td>
-        <td class="px-6 py-3 text-sm text-dark/70">{{ r.mesa }}</td>
-        <td class="px-6 py-3">
-          <span [class]="'rounded-full px-2.5 py-1 text-xs font-medium ' + getEstadoClass(r.estado)">
-            {{ r.estado }}
-          </span>
-        </td>
-        <td class="px-6 py-3 text-sm text-primary">
-          @if (r.estado === 'Confirmada') {
-          <span class="cursor-pointer hover:underline">Ver</span>
-          <span class="mx-1 text-gray">·</span>
-          <span class="cursor-pointer hover:underline">Reasignar</span>
-          <span class="mx-1 text-gray">·</span>
-          <span class="cursor-pointer hover:underline">Cancelar</span>
-          } @else if (r.estado === 'Pendiente') {
-          <span class="cursor-pointer hover:underline">Confirmar</span>
-          <span class="mx-1 text-gray">·</span>
-          <span class="cursor-pointer hover:underline">Cancelar</span>
-          } @else {
-          <span class="text-gray">—</span>
-          }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[620px]">
+      <thead>
+        <tr class="bg-background text-xs uppercase text-gray">
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Cliente</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Hora</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Personas</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Mesa</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Estado</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-medium">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray/10">
+        @for (r of reservasFiltradas; track r.cliente) {
+        <tr class="transition-colors hover:bg-background/60">
+          <td class="px-4 sm:px-6 py-3.5 whitespace-nowrap">
+            <p class="text-sm font-medium text-dark">{{ r.cliente }}</p>
+            <p class="text-xs text-gray">{{ r.telefono }}</p>
+          </td>
+          <td class="px-4 sm:px-6 py-3.5 text-sm text-dark/70 whitespace-nowrap">{{ r.hora }}</td>
+          <td class="px-4 sm:px-6 py-3.5 text-sm text-dark/70 whitespace-nowrap">{{ r.personas }}</td>
+          <td class="px-4 sm:px-6 py-3.5 text-sm text-dark/70 whitespace-nowrap">{{ r.mesa }}</td>
+          <td class="px-4 sm:px-6 py-3.5 whitespace-nowrap">
+            <span [class]="'rounded-full px-2.5 py-1 text-xs font-medium ' + getEstadoClass(r.estado)">
+              {{ r.estado }}
+            </span>
+          </td>
+          <td class="px-4 sm:px-6 py-3.5 text-sm text-primary whitespace-nowrap">
+            @if (r.estado === 'Confirmada') {
+            <span class="cursor-pointer hover:underline">Ver</span>
+            <span class="mx-1 text-gray">·</span>
+            <span class="cursor-pointer hover:underline">Reasignar</span>
+            <span class="mx-1 text-gray">·</span>
+            <span class="cursor-pointer hover:underline">Cancelar</span>
+            } @else if (r.estado === 'Pendiente') {
+            <span class="cursor-pointer hover:underline">Confirmar</span>
+            <span class="mx-1 text-gray">·</span>
+            <span class="cursor-pointer hover:underline">Cancelar</span>
+            } @else {
+            <span class="text-gray">—</span>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
