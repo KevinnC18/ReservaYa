@@ -52,16 +52,20 @@
                         <a routerLink="/busqueda" routerLinkActive="bg-primary text-light"
                             [routerLinkActiveOptions]="{exact: true}"
                             class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105 hover:text-light transition-all duration-300">Búsqueda</a>
-                        <a routerLink="/detalle" routerLinkActive="bg-primary text-light" [routerLinkActiveOptions]="{exact: false}" class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105  hover:text-light transition-all duration-300">Detalle</a>
+                        <a routerLink="/detalle" routerLinkActive="bg-primary text-light"
+                            [routerLinkActiveOptions]="{exact: false}"
+                            class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105  hover:text-light transition-all duration-300">Detalle</a>
                         <a routerLink="/reserva" routerLinkActive="bg-primary text-light"
                             [routerLinkActiveOptions]="{exact: true}"
                             class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105 hover:text-light transition-all duration-300">Reserva</a>
                         <a routerLink="/confirmacion" routerLinkActive="bg-primary text-light"
                             [routerLinkActiveOptions]="{exact: true}"
                             class="rounded-full px-3 py-2 text-sm font-medium text-gray hover:scale-105 hover:text-light transition-all duration-300">Confirmación</a>
-                        <a routerLink="/admin" routerLinkActive="bg-primary text-white"
-                            [routerLinkActiveOptions]="{exact: true}"
-                            class="rounded-full px-3 py-2 text-sm font-medium text-primary hover:scale-105 hover:text-light border border-primary/70 transition-all duration-300">Admin</a>
+                        <a routerLink="/admin/login"
+                            [class.bg-primary]="isAdminActive()"
+                            [class.text-light]="isAdminActive()"
+                            [class.text-primary]="!isAdminActive()"
+                            class="rounded-full px-3 py-2 text-sm font-medium hover:scale-105 hover:text-light border border-primary/70 transition-all duration-300">Admin</a>
                     </div>
                 </div>
             </div>
@@ -86,9 +90,12 @@
             <a routerLink="/confirmacion" routerLinkActive="bg-primary/20 text-light"
                 [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()"
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Confirmación</a>
-            <a routerLink="/admin" routerLinkActive="bg-primary/20 text-light" [routerLinkActiveOptions]="{exact:true}"
+            <a routerLink="/admin/login"
+                [class.bg-primary/20]="isAdminActive()"
+                [class.text-light]="isAdminActive()"
+                [class.text-gray]="!isAdminActive()"
                 (click)="closeMenu()"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-light">Admin</a>
+                class="block rounded-md px-3 py-2 text-base font-medium hover:text-light">Admin</a>
         </div>
     </div>
 </nav>
