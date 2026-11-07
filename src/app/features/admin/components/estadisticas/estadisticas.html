@@ -1,57 +1,57 @@
 <div class="mb-6">
-  <h1 class="text-xl sm:text-2xl font-bold text-dark">Estadísticas</h1>
-  <p class="mt-0.5 text-xs sm:text-sm text-gray">{{ restaurante.name }} · Resumen de desempeño del mes</p>
+  <h1 class="text-xl font-bold text-dark">Estadísticas</h1>
+  <p class="mt-0.5 text-sm text-gray">{{ restaurante.name }} · Resumen de desempeño del mes</p>
 </div>
 
-<div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
-    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Reservas del mes</p>
-    <p class="text-2xl sm:text-3xl font-bold text-primary">{{ reservasMes }}</p>
+<div class="mb-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
+  <div class="rounded-xl border border-gray/20 bg-light p-5">
+    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Reservas del mes</p>
+    <p class="text-3xl font-bold text-primary">{{ reservasMes }}</p>
     <p class="mt-1 text-xs text-success">+12% vs. mes anterior</p>
   </div>
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
-    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Ticket promedio</p>
-    <p class="text-2xl sm:text-3xl font-bold text-dark">${{ ticketPromedio | number }}</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-5">
+    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Ticket promedio</p>
+    <p class="text-3xl font-bold text-dark">${{ ticketPromedio | number }}</p>
     <p class="mt-1 text-xs text-gray">Por comensal</p>
   </div>
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
-    <p class="mb-1 text-xs uppercase tracking-wide text-gray">Calificación</p>
-    <p class="text-2xl sm:text-3xl font-bold text-dark">{{ calificacion }}</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-5">
+    <p class="mb-2 text-xs uppercase tracking-wide text-gray">Calificación</p>
+    <p class="text-3xl font-bold text-dark">{{ calificacion }}</p>
     <p class="mt-1 text-xs text-gray">Promedio de 124 reseñas</p>
   </div>
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-5">
-    <p class="mb-1 text-xs uppercase tracking-wide text-gray">No-shows</p>
-    <p class="text-2xl sm:text-3xl font-bold text-error">{{ noShows }}</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-5">
+    <p class="mb-2 text-xs uppercase tracking-wide text-gray">No-shows</p>
+    <p class="text-3xl font-bold text-error">{{ noShows }}</p>
     <p class="mt-1 text-xs text-gray">{{ ocupacionPromedio }}% ocupación promedio</p>
   </div>
 </div>
 
-<div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-6 shadow-sm">
-    <h2 class="font-semibold text-dark text-sm sm:text-base">Ocupación semanal</h2>
-    <p class="mb-5 text-xs text-gray">Porcentaje de mesas ocupadas por día</p>
-    <div class="flex items-end gap-1.5 sm:gap-3 h-36">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+  <div class="rounded-xl border border-gray/20 bg-light p-6">
+    <h2 class="font-semibold text-dark">Ocupación semanal</h2>
+    <p class="mb-6 text-xs text-gray">Porcentaje de mesas ocupadas por día</p>
+    <div class="flex items-end gap-3" style="height: 130px;">
       @for (dia of ocupacionSemanal; track dia.dia) {
       <div class="flex flex-1 flex-col items-center gap-1">
-        <span class="text-[10px] sm:text-xs font-medium text-dark/70">{{ dia.porcentaje }}%</span>
-        <div class="w-full rounded-t bg-primary transition-all duration-300" [style.height]="getBarHeight(dia.porcentaje)"></div>
-        <span class="text-[11px] sm:text-xs text-gray">{{ dia.dia }}</span>
+        <span class="text-xs font-medium text-dark/70">{{ dia.porcentaje }}%</span>
+        <div class="w-full rounded-t bg-primary" [style.height]="getBarHeight(dia.porcentaje)"></div>
+        <span class="text-xs text-gray">{{ dia.dia }}</span>
       </div>
       }
     </div>
   </div>
 
-  <div class="rounded-xl border border-gray/20 bg-light p-4 sm:p-6 shadow-sm">
-    <h2 class="font-semibold text-dark text-sm sm:text-base">Reservas por horario</h2>
-    <p class="mb-5 text-xs text-gray">Franjas con mayor demanda esta semana</p>
+  <div class="rounded-xl border border-gray/20 bg-light p-6">
+    <h2 class="font-semibold text-dark">Reservas por horario</h2>
+    <p class="mb-6 text-xs text-gray">Franjas con mayor demanda esta semana</p>
     <div class="space-y-3">
       @for (franja of franjas; track franja.hora) {
-      <div class="flex items-center gap-2.5 sm:gap-3">
-        <span class="w-11 sm:w-12 shrink-0 text-xs font-medium text-dark">{{ franja.hora }}</span>
+      <div class="flex items-center gap-3">
+        <span class="w-12 shrink-0 text-xs font-medium text-dark">{{ franja.hora }}</span>
         <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-background">
           <div class="h-full rounded-full bg-primary" [style.width]="getFranjaWidth(franja.reservas)"></div>
         </div>
-        <span class="w-7 sm:w-8 text-right text-xs text-gray">{{ franja.reservas }}</span>
+        <span class="w-8 text-right text-xs text-gray">{{ franja.reservas }}</span>
       </div>
       }
     </div>

@@ -1,84 +1,82 @@
-<div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+<div class="mb-6 flex items-start justify-between">
   <div>
-    <h1 class="text-xl sm:text-2xl font-bold text-dark">Perfil del restaurante</h1>
-    <p class="mt-0.5 text-xs sm:text-sm text-gray">Datos visibles para los comensales en ReservaYa</p>
+    <h1 class="text-xl font-bold text-dark">Perfil del restaurante</h1>
+    <p class="mt-0.5 text-sm text-gray">Datos visibles para los comensales en ReservaYa</p>
   </div>
   @if (guardado()) {
-  <span class="self-start sm:self-auto rounded-lg bg-success/15 px-3 py-1.5 text-xs sm:text-sm font-medium text-success">
-    ✓ Cambios guardados
+  <span class="rounded-lg bg-success/15 px-3 py-1.5 text-sm font-medium text-success">
+    Cambios guardados
   </span>
   }
 </div>
 
-<div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
-  <!-- Tarjeta de Vista Previa -->
-  <div class="overflow-hidden rounded-xl border border-gray/20 bg-light shadow-sm lg:self-start">
-    <div class="h-44 sm:h-48 lg:h-36 bg-surface">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+  <div class="overflow-hidden rounded-xl border border-gray/20 bg-light">
+    <div class="h-36 bg-surface">
       <img [src]="perfil.imagen"
-        [alt]="perfil.nombre" class="h-full w-full object-cover opacity-90">
+        [alt]="perfil.nombre" class="h-full w-full object-cover opacity-80">
     </div>
-    <div class="p-4 sm:p-5">
-      <p class="text-base sm:text-lg font-bold text-dark">{{ perfil.nombre }}</p>
-      <p class="mt-0.5 text-xs sm:text-sm text-primary font-medium">{{ perfil.categoria }} · {{ perfil.precio }}</p>
-      <p class="mt-2.5 text-xs sm:text-sm leading-6 text-dark/70">{{ perfil.descripcion }}</p>
+    <div class="p-5">
+      <p class="text-lg font-bold text-dark">{{ perfil.nombre }}</p>
+      <p class="mt-1 text-sm text-primary">{{ perfil.categoria }} · {{ perfil.precio }}</p>
+      <p class="mt-3 text-sm leading-6 text-dark/70">{{ perfil.descripcion }}</p>
       <button type="button"
-        class="mt-4 w-full cursor-pointer rounded-lg border border-gray/20 py-2 text-xs sm:text-sm font-medium text-dark hover:border-primary hover:text-primary transition-colors">
+        class="mt-4 w-full cursor-pointer rounded-lg border border-gray/20 py-2 text-sm font-medium text-dark hover:border-primary hover:text-primary">
         Cambiar foto de portada
       </button>
     </div>
   </div>
 
-  <!-- Formulario de Configuración -->
-  <form class="space-y-4 lg:col-span-2 rounded-xl border border-gray/20 bg-light p-4 sm:p-6 shadow-sm" (ngSubmit)="guardar()">
+  <form class="space-y-4 lg:col-span-2 rounded-xl border border-gray/20 bg-light p-6" (ngSubmit)="guardar()">
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Nombre</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Nombre</label>
         <input [(ngModel)]="perfil.nombre" name="nombre"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Categoría</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Categoría</label>
         <input [(ngModel)]="perfil.categoria" name="categoria"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
     </div>
 
     <div>
-      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Descripción</label>
-      <textarea [(ngModel)]="perfil.descripcion" name="descripcion" rows="3"
-        class="w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary"></textarea>
+      <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Descripción</label>
+      <textarea [(ngModel)]="perfil.descripcion" name="descripcion" rows="4"
+        class="w-full rounded-xl border border-gray/20 bg-background px-4 py-3 text-sm text-dark outline-none focus:border-primary"></textarea>
     </div>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Dirección / Ubicación</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Dirección</label>
         <input [(ngModel)]="perfil.direccion" name="direccion"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Teléfono</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Teléfono</label>
         <input [(ngModel)]="perfil.telefono" name="telefono"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Sitio web</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Sitio web</label>
         <input [(ngModel)]="perfil.web" name="web"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Horario</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Horario</label>
         <input [(ngModel)]="perfil.horario" name="horario"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Mesas Totales</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Mesas</label>
         <input type="number" [(ngModel)]="perfil.capacidad" name="capacidad"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
       </div>
       <div>
-        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-gray">Rango de precio</label>
+        <label class="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray">Rango de precio</label>
         <select [(ngModel)]="perfil.precio" name="precio"
-          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-3.5 sm:px-4 text-sm text-dark outline-none transition focus:border-primary focus:ring-1 focus:ring-primary">
+          class="h-11 w-full rounded-xl border border-gray/20 bg-background px-4 text-sm text-dark outline-none focus:border-primary">
           <option>$</option>
           <option>$$</option>
           <option>$$$</option>
@@ -89,7 +87,7 @@
 
     <div class="flex justify-end pt-2">
       <button type="submit"
-        class="w-full sm:w-auto cursor-pointer rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-light shadow-sm transition-colors hover:bg-secondary">
+        class="cursor-pointer rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-light transition-colors hover:bg-secondary">
         Guardar cambios
       </button>
     </div>
